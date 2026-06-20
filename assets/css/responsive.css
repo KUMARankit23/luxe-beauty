@@ -1,0 +1,95 @@
+/* ============================================================
+   LUXÉ BEAUTY — RESPONSIVE (Mobile-first overrides)
+   ============================================================ */
+
+/* ── TABLET (≤1023px) ── */
+@media(max-width:1023px){
+  .site-nav,.header-acc-btn{display:none}
+  .hamburger{display:flex}
+  .collections-grid{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .ig-grid{grid-template-columns:repeat(3,1fr)}
+  .nl-card{grid-template-columns:1fr}
+  .nl-card__media{display:none}
+  .footer__grid{grid-template-columns:repeat(2,1fr)}
+  .products-grid{grid-template-columns:repeat(2,1fr)}
+  .cart-page-layout{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .account-layout{grid-template-columns:1fr}
+  .account-sidebar{position:static}
+  .comparison-wrap{overflow-x:auto}
+  .comparison-table{min-width:640px}
+  .filters-sidebar{display:none;position:fixed;inset-y:0;left:0;z-index:870;width:min(320px,90vw);overflow-y:auto;background:var(--white);padding:var(--sp-6);box-shadow:var(--sh-xl);transform:translateX(-100%);transition:transform var(--t-slow)}
+  .filters-sidebar.open{display:flex;flex-direction:column;transform:translateX(0)}
+  .filters-toggle-btn{display:flex}
+  .shop-layout{flex-direction:column}
+  .products-area{width:100%}
+  .product-layout{grid-template-columns:1fr}
+  .product-gallery{position:static}
+  .trust-badges{grid-template-columns:repeat(2,1fr)}
+  .cart-page-layout{grid-template-columns:1fr}
+  .footer__grid{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ── MOBILE (≤767px) ── */
+@media(max-width:767px){
+  :root{--section-py:clamp(2.5rem,6vw,4rem)}
+  .section-title{font-size:clamp(1.75rem,6vw,2.5rem)}
+  .hero__title{font-size:clamp(2rem,8vw,2.75rem);max-width:100%}
+  .hero__content{padding-block:3rem;align-items:center;text-align:center}
+  .hero__ctas{justify-content:center;flex-direction:column;width:100%}
+  .hero__ctas .btn{width:100%;justify-content:center}
+  .hero__scroll{display:none}
+  .collections-grid{grid-template-columns:repeat(2,1fr);gap:.75rem}
+  .why-grid{grid-template-columns:1fr;max-width:320px;margin-inline:auto}
+  .stats-bar{grid-template-columns:repeat(2,1fr);padding:2rem var(--sp-6)}
+  .ig-grid{grid-template-columns:repeat(2,1fr);gap:4px}
+  .footer__grid{grid-template-columns:1fr 1fr}
+  .footer__bottom-inner{flex-direction:column;text-align:center}
+  .footer__legal{justify-content:center}
+  .testi-card{padding:2rem var(--sp-6)}
+  .testi-card__quote{font-size:var(--fs-lg)}
+  .exit-popup__visual{display:none}
+  .exit-popup__content{padding:2rem var(--sp-5)}
+  .exit-popup__title{font-size:var(--fs-xl)}
+  .cart-drawer{width:100%}
+  .cart-page-item{grid-template-columns:72px 1fr;grid-template-rows:auto auto}
+  .cart-page-item__subtotal{grid-column:1/-1;text-align:left}
+  .products-grid,.products-grid--4{grid-template-columns:repeat(2,1fr);gap:.75rem}
+  .bundle-builder__items{flex-direction:column}
+  .contact-form__grid{grid-template-columns:1fr}
+  .nl-card__form{flex-direction:column}
+  .nl-card__form .btn{width:100%}
+  .sticky-atc .sticky-atc__product{display:none}
+  .sticky-atc .btn{flex:1}
+}
+
+/* ── SMALL MOBILE (≤479px) ── */
+@media(max-width:479px){
+  .footer__grid{grid-template-columns:1fr}
+  .collections-grid{grid-template-columns:1fr}
+  .hero__ctas .btn--lg{padding:16px 28px;font-size:.875rem}
+}
+
+/* ── TOUCH TARGET IMPROVEMENTS ── */
+@media(pointer:coarse){
+  .btn{min-height:48px}
+  .header__btn{width:48px;height:48px}
+  .accordion__trigger{min-height:52px}
+  .tab-btn{padding:var(--sp-4) var(--sp-5)}
+  .nav__link{padding:var(--sp-4) var(--sp-4)}
+}
+
+/* ── HIDE/SHOW HELPERS ── */
+.hide-mobile{display:block}
+.show-mobile{display:none}
+@media(max-width:767px){
+  .hide-mobile{display:none!important}
+  .show-mobile{display:block!important}
+}
+.hide-desktop{display:none}
+@media(min-width:1024px){
+  .hide-desktop{display:none!important}
+  .show-desktop{display:block}
+}

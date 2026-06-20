@@ -1,0 +1,73 @@
+/* ============================================================
+   LUXÉ BEAUTY — DESIGN TOKENS (CSS Custom Properties)
+   ============================================================ */
+:root {
+  /* Brand Colors */
+  --gold: #D4AF37;
+  --gold-light: #E8CC6B;
+  --gold-dark: #B8960C;
+  --gold-muted: rgba(212,175,55,.12);
+  --black: #111111;
+  --black-soft: #1A1A1A;
+  --white: #FFFFFF;
+  --off-white: #FAFAF8;
+  --cream: #F9F5EE;
+  --gray-100: #F5F5F5;
+  --gray-200: #EBEBEB;
+  --gray-300: #D9D9D9;
+  --gray-400: #BBBBBB;
+  --gray-500: #888888;
+  --gray-600: #666666;
+  --gray-700: #444444;
+
+  /* Typography */
+  --font-heading: 'Playfair Display', Georgia, serif;
+  --font-body: 'Poppins', -apple-system, sans-serif;
+
+  /* Fluid Font Scale */
+  --fs-xs:   clamp(.7rem,  1.5vw, .75rem);
+  --fs-sm:   clamp(.8rem,  1.8vw, .875rem);
+  --fs-base: clamp(.875rem,2vw,   1rem);
+  --fs-md:   clamp(1rem,   2.2vw, 1.125rem);
+  --fs-lg:   clamp(1.125rem,2.5vw,1.25rem);
+  --fs-xl:   clamp(1.25rem,3vw,   1.5rem);
+  --fs-2xl:  clamp(1.5rem, 4vw,   2rem);
+  --fs-3xl:  clamp(2rem,   5vw,   2.75rem);
+  --fs-4xl:  clamp(2.5rem, 6vw,   3.5rem);
+  --fs-5xl:  clamp(3rem,   7vw,   5rem);
+
+  /* Spacing */
+  --sp-1:  .25rem;  --sp-2:  .5rem;   --sp-3:  .75rem;
+  --sp-4:  1rem;    --sp-5:  1.25rem; --sp-6:  1.5rem;
+  --sp-8:  2rem;    --sp-10: 2.5rem;  --sp-12: 3rem;
+  --sp-16: 4rem;    --sp-20: 5rem;    --sp-24: 6rem;
+
+  /* Borders */
+  --r-sm: 4px; --r-md: 8px; --r-lg: 16px; --r-xl: 24px; --r-full: 9999px;
+
+  /* Shadows */
+  --sh-sm:   0 1px 3px rgba(0,0,0,.08);
+  --sh-md:   0 4px 16px rgba(0,0,0,.10);
+  --sh-lg:   0 10px 40px rgba(0,0,0,.14);
+  --sh-xl:   0 20px 60px rgba(0,0,0,.18);
+  --sh-gold: 0 4px 20px rgba(212,175,55,.30);
+  --sh-gold-lg: 0 8px 32px rgba(212,175,55,.40);
+
+  /* Transitions */
+  --t-fast:   150ms cubic-bezier(.4,0,.2,1);
+  --t-base:   250ms cubic-bezier(.4,0,.2,1);
+  --t-slow:   400ms cubic-bezier(.4,0,.2,1);
+  --t-spring: 500ms cubic-bezier(.34,1.56,.64,1);
+
+  /* Layout */
+  --container:      1440px;
+  --container-wide: 1280px;
+  --container-md:   1024px;
+  --header-h: 72px;
+  --section-py: clamp(3.5rem,8vw,7rem);
+}
+
+/* ── Dark mode tokens (reserved) ── */
+@media (prefers-color-scheme: dark) {
+  :root { --page-bg: var(--black); }
+}

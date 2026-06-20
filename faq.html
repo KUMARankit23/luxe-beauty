@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>FAQs — LUXÉ Beauty</title>
+<meta name="description" content="Frequently asked questions about LUXÉ Beauty products, shipping, returns, and account.">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<style>
+.faq-hero{padding:clamp(3rem,8vw,6rem) 0;background:var(--cream);text-align:center}
+</style>
+</head>
+<body>
+<div id="LuxeHeader"></div>
+
+<main id="main" class="page-load">
+
+  <!-- Hero -->
+  <div class="faq-hero">
+    <div class="container">
+      <span class="eyebrow" style="justify-content:center" data-aos="fade-up">Support</span>
+      <h1 class="section-title" data-aos="fade-up">Frequently Asked <em>Questions</em></h1>
+      <p class="section-subtitle" data-aos="fade-up">Everything you need to know about LUXÉ Beauty</p>
+      <!-- Search -->
+      <div style="max-width:500px;margin:2rem auto 0" data-aos="fade-up">
+        <div style="position:relative">
+          <svg style="position:absolute;left:1.25rem;top:50%;transform:translateY(-50%);color:var(--gray-400)" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35" stroke-linecap="round"/></svg>
+          <input type="search" id="FaqSearch" class="form-input" placeholder="Search questions…" style="padding-left:3rem;border-radius:var(--r-full)" aria-label="Search FAQs">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container container--md">
+
+      <!-- Category Tabs -->
+      <div class="faq-categories" data-aos="fade-up" id="FaqCategories">
+        <button class="faq-cat-btn active" data-cat="all" onclick="filterFaqs('all',this)">All</button>
+        <button class="faq-cat-btn" data-cat="Products" onclick="filterFaqs('Products',this)">Products</button>
+        <button class="faq-cat-btn" data-cat="Shipping" onclick="filterFaqs('Shipping',this)">Shipping</button>
+        <button class="faq-cat-btn" data-cat="Returns" onclick="filterFaqs('Returns',this)">Returns</button>
+        <button class="faq-cat-btn" data-cat="Account" onclick="filterFaqs('Account',this)">Account</button>
+      </div>
+
+      <div id="FaqList" data-accordion></div>
+
+      <!-- Still need help -->
+      <div style="background:var(--cream);border-radius:var(--r-xl);padding:3rem;text-align:center;margin-top:4rem" data-aos="scale">
+        <div style="font-size:2.5rem;margin-bottom:1rem" aria-hidden="true">💬</div>
+        <h3 style="font-family:var(--font-heading);font-size:var(--fs-xl);font-weight:700;margin-bottom:0.75rem">Still need help?</h3>
+        <p style="font-size:var(--fs-sm);color:var(--gray-600);margin-bottom:1.5rem">Our skincare experts are here to help you find the perfect routine.</p>
+        <div style="display:flex;gap:var(--sp-4);justify-content:center;flex-wrap:wrap">
+          <a href="contact.html" class="btn btn--primary">Contact Us</a>
+          <a href="mailto:support@luxebeauty.in" class="btn btn--secondary">Email Support</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<div id="LuxeFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/components.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+LuxeComponents.inject('FAQs — LUXÉ Beauty');
+
+let currentFaqs = LUXE_DATA.faqs;
+
+function renderFaqs(faqs) {
+  const list = document.getElementById('FaqList');
+  if (!list) return;
+  if (!faqs.length) {
+    list.innerHTML = `<div class="empty-state" style="padding:3rem"><div class="empty-state__icon">🔍</div><p class="empty-state__title">No results found</p><p class="empty-state__text">Try a different search term</p></div>`;
+    return;
+  }
+  list.innerHTML = `<div class="accordion" data-accordion>${faqs.map((faq, i) => `
+    <div class="accordion__item">
+      <button class="accordion__trigger" aria-expanded="${i===0}" aria-controls="faq-${i}" id="faq-btn-${i}">
+        <span>${faq.q}</span>
+        <span class="accordion__icon">+</span>
+      </button>
+      <div class="accordion__content${i===0?' open':''}" id="faq-${i}" role="region" aria-labelledby="faq-btn-${i}">
+        <div class="accordion__body">${faq.a}</div>
+      </div>
+    </div>`).join('')}</div>`;
+  initAccordions();
+}
+
+function filterFaqs(cat, btn) {
+  document.querySelectorAll('.faq-cat-btn').forEach(b => b.classList.remove('active'));
+  btn?.classList.add('active');
+  const q = document.getElementById('FaqSearch')?.value.toLowerCase() || '';
+  let filtered = cat === 'all' ? LUXE_DATA.faqs : LUXE_DATA.faqs.filter(f => f.category === cat);
+  if (q) filtered = filtered.filter(f => f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q));
+  renderFaqs(filtered);
+}
+
+// Search
+document.getElementById('FaqSearch')?.addEventListener('input', LuxeUtils.debounce(e => {
+  const q = e.target.value.toLowerCase();
+  const activeCat = document.querySelector('.faq-cat-btn.active')?.dataset.cat || 'all';
+  let filtered = activeCat === 'all' ? LUXE_DATA.faqs : LUXE_DATA.faqs.filter(f => f.category === activeCat);
+  if (q) filtered = filtered.filter(f => f.q.toLowerCase().includes(q) || f.a.toLowerCase().includes(q));
+  renderFaqs(filtered);
+}, 300));
+
+renderFaqs(LUXE_DATA.faqs);
+</script>
+</body>
+</html>

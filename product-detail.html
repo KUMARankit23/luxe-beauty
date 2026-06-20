@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product — LUXÉ Beauty</title>
+<meta name="description" content="View product details and add to cart.">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+<div id="LuxeHeader"></div>
+<main id="main" class="page-load" style="padding-block:clamp(2rem,4vw,4rem)">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb" id="Breadcrumb"></nav>
+    <div class="product-layout" id="ProductLayout">
+      <p style="color:var(--gray-500);padding:4rem;text-align:center">Loading product…</p>
+    </div>
+
+    <!-- Bundle Builder -->
+    <section class="section--sm" id="BundleSection" style="display:none" aria-labelledby="bundle-title">
+      <h2 class="section-title" id="bundle-title" style="font-size:var(--fs-2xl);margin-bottom:var(--sp-6)">Frequently Bought Together</h2>
+      <div class="bundle-builder" data-bundle>
+        <div class="bundle-builder__items" id="BundleItems"></div>
+        <div class="bundle-footer">
+          <div>
+            <div class="bundle-total__label">Bundle Total</div>
+            <div style="display:flex;align-items:baseline;gap:var(--sp-3)">
+              <span class="bundle-total__price" id="BundleTotal">₹0</span>
+              <span class="bundle-total__original" id="BundleOriginal"></span>
+            </div>
+            <div class="bundle-savings" id="BundleSavings"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--sp-2)">
+            <span class="badge badge--best" id="BundleDiscount">15% OFF</span>
+            <button class="btn btn--primary" id="BundleAddBtn" onclick="addBundleToCart()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:1.7" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke-linecap="round"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0" stroke-linecap="round"/></svg>
+              Add Bundle to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="section--sm" id="FaqSection" style="display:none" aria-labelledby="faq-title">
+      <div class="container container--md" style="max-width:780px;margin-inline:0">
+        <h2 id="faq-title" class="section-title" style="font-size:var(--fs-2xl);margin-bottom:var(--sp-6)">Frequently Asked Questions</h2>
+        <div class="accordion" data-accordion id="ProductFaqs"></div>
+      </div>
+    </section>
+
+    <!-- Related Products -->
+    <section class="section--sm" id="RelatedSection" aria-labelledby="related-title">
+      <h2 id="related-title" class="section-title" style="font-size:var(--fs-2xl);margin-bottom:var(--sp-6)">You May Also Like</h2>
+      <div class="products-grid products-grid--4" data-stagger id="RelatedGrid"></div>
+    </section>
+
+    <!-- Recently Viewed -->
+    <section class="section--sm" id="RecentSection" aria-labelledby="recent-title" style="display:none">
+      <h2 id="recent-title" class="section-title" style="font-size:var(--fs-2xl);margin-bottom:var(--sp-6)">Recently Viewed</h2>
+      <div class="products-grid products-grid--4" data-stagger id="RecentGrid"></div>
+    </section>
+  </div>
+
+  <!-- Sticky ATC -->
+  <div class="sticky-atc" id="StickyAtc" aria-hidden="true">
+    <div class="container sticky-atc__inner">
+      <div class="sticky-atc__product">
+        <div class="sticky-atc__thumb" id="StickyThumb">🌿</div>
+        <div>
+          <div class="sticky-atc__name" id="StickyName">Product</div>
+          <div class="sticky-atc__price" id="StickyPrice">₹0</div>
+        </div>
+      </div>
+      <button class="btn btn--primary sticky-atc__btn" id="StickyBtn">Add to Bag</button>
+    </div>
+  </div>
+</main>
+<div id="LuxeFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/components.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+const RECENTLY_KEY = 'luxe_recently_viewed';
+const BUNDLE_DISCOUNT = 0.15;
+let currentProduct = null;
+let selectedVariantId = null;
+let bundleItems = [];
+
+function getRecentlyViewed() { try { return JSON.parse(localStorage.getItem(RECENTLY_KEY)) || []; } catch { return []; } }
+function addRecentlyViewed(p) {
+  let recent = getRecentlyViewed().filter(r => r.id !== p.id);
+  recent.unshift({ id: p.id, handle: p.handle, title: p.title, price: p.price, img: p.img, type: p.type });
+  recent = recent.slice(0, 8);
+  localStorage.setItem(RECENTLY_KEY, JSON.stringify(recent));
+}
+
+function renderProduct(product) {
+  currentProduct = product;
+  selectedVariantId = product.variants[0].id;
+  const pct = LuxeUtils.discountPct(product.price, product.comparePrice);
+
+  // Update page title & meta
+  document.title = `${product.title} — LUXÉ Beauty`;
+  LuxeComponents.inject(`${product.title} — LUXÉ Beauty`);
+
+  // Breadcrumb
+  document.getElementById('Breadcrumb').innerHTML = `
+    <a href="index.html">Home</a><span class="breadcrumb__sep">›</span>
+    <a href="products.html?collection=${product.collection}">${product.type}</a><span class="breadcrumb__sep">›</span>
+    <span aria-current="page">${product.title}</span>`;
+
+  // Product layout
+  const images = [product.img, product.img2].filter(Boolean);
+  document.getElementById('ProductLayout').innerHTML = `
+    <!-- Gallery -->
+    <div class="product-gallery">
+      <div class="gallery__main" id="GalleryMain">
+        <img src="${images[0]}" alt="${product.title}" class="gallery__main-img" id="MainImg" loading="eager" width="600" height="600">
+        ${product.tags.includes('bestseller') ? '<div style="position:absolute;top:1rem;left:1rem"><span class="badge badge--best">Best Seller</span></div>' : ''}
+        ${product.tags.includes('new') ? '<div style="position:absolute;top:1rem;left:1rem"><span class="badge badge--new">New</span></div>' : ''}
+      </div>
+      <div class="gallery__thumbs">
+        ${images.map((img, i) => `
+          <button class="gallery__thumb${i===0?' active':''}" onclick="switchImg('${img}',this)" aria-label="View image ${i+1}">
+            <img src="${img}" alt="${product.title} - View ${i+1}" loading="lazy" width="76" height="76">
+          </button>`).join('')}
+      </div>
+    </div>
+
+    <!-- Details -->
+    <div class="product-details">
+      <p class="product-details__brand">LUXÉ Beauty</p>
+      <h1 class="product-details__title">${product.title}</h1>
+      <div style="display:flex;align-items:center;gap:var(--sp-3);flex-wrap:wrap;margin-bottom:var(--sp-2)">
+        ${LuxeUtils.starsHTML(product.rating, product.reviewCount)}
+        <a href="#reviews" style="font-size:var(--fs-sm);color:var(--gray-500);text-decoration:underline">${product.reviewCount} reviews</a>
+      </div>
+      <div class="product-details__price-row">
+        <span class="product-details__price" id="ProductPrice">${LuxeUtils.formatPrice(product.price)}</span>
+        ${product.comparePrice ? `<span class="product-details__compare">${LuxeUtils.formatPrice(product.comparePrice)}</span>` : ''}
+        ${pct ? `<span class="product-details__save">${pct}% OFF</span>` : ''}
+      </div>
+      <p style="font-size:var(--fs-sm);color:var(--gray-600);line-height:1.7">${product.description}</p>
+
+      <!-- Variants -->
+      ${product.variants.length > 1 ? `
+        <div>
+          <p style="font-size:var(--fs-sm);font-weight:600;margin-bottom:var(--sp-3)">Size: <span style="font-weight:400;color:var(--gray-500)" id="SelectedVariant">${product.variants[0].name}</span></p>
+          <div style="display:flex;gap:var(--sp-2)">
+            ${product.variants.map(v => `
+              <button class="btn btn--secondary btn--sm${v.id===selectedVariantId?' ':''}" style="${v.id===selectedVariantId?'background:var(--black);color:var(--white)':''}"
+                onclick="selectVariant(${v.id},'${v.name}',${v.price},this)" aria-label="Select ${v.name}">${v.name}</button>`).join('')}
+          </div>
+        </div>` : ''}
+
+      <!-- Qty + ATC -->
+      <div style="display:flex;gap:var(--sp-3);align-items:center;flex-wrap:wrap">
+        <div class="qty-selector" aria-label="Quantity">
+          <button class="qty-btn" onclick="changeQty(-1)" aria-label="Decrease">−</button>
+          <input class="qty-num" type="number" id="QtyInput" value="1" min="1" max="10" aria-label="Quantity">
+          <button class="qty-btn" onclick="changeQty(1)" aria-label="Increase">+</button>
+        </div>
+        <div class="product-details__actions" style="flex:1">
+          <button class="btn btn--primary product-details__atc" id="AtcBtn" onclick="addCurrentToCart()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:1.7" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke-linecap="round"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0" stroke-linecap="round"/></svg>
+            Add to Bag
+          </button>
+          <button class="product-details__wishlist${LuxeWishlist.has(product.id)?' wishlisted':''}"
+            onclick="LuxeWishlist.toggle(${product.id},'${product.title}',${product.price},'${product.img}','${product.handle}')"
+            data-wishlist-btn="${product.id}" aria-label="Add to wishlist" aria-pressed="${LuxeWishlist.has(product.id)}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="${LuxeWishlist.has(product.id)?'#E57373':'none'}" stroke="${LuxeWishlist.has(product.id)?'#E57373':'currentColor'}" class="wishlist-icon" style="stroke-width:1.7" aria-hidden="true">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Trust Badges -->
+      <div class="trust-badges">
+        <div class="trust-badge"><div class="trust-badge__icon" aria-hidden="true">🔒</div><span class="trust-badge__label">Secure Payment</span></div>
+        <div class="trust-badge"><div class="trust-badge__icon" aria-hidden="true">🚚</div><span class="trust-badge__label">Fast Delivery</span></div>
+        <div class="trust-badge"><div class="trust-badge__icon" aria-hidden="true">↩</div><span class="trust-badge__label">Easy Returns</span></div>
+        <div class="trust-badge"><div class="trust-badge__icon" aria-hidden="true">🧪</div><span class="trust-badge__label">Derma Tested</span></div>
+      </div>
+
+      <!-- Delivery Estimator -->
+      <div class="delivery-box" data-delivery-form>
+        <p class="delivery-box__title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="stroke-width:1.7" aria-hidden="true"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          Check Delivery Date
+        </p>
+        <div class="delivery-box__row">
+          <input type="text" data-pincode class="form-input" placeholder="Enter 6-digit pincode" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" aria-label="Pincode" style="border-radius:var(--r-full)">
+          <button data-check-btn class="btn btn--primary">Check</button>
+        </div>
+        <div class="delivery-box__result" data-delivery-result role="status" aria-live="polite"></div>
+        <p style="font-size:var(--fs-xs);color:var(--gray-500);margin-top:var(--sp-2)">✓ Cash on Delivery available</p>
+      </div>
+
+      <!-- Product Tabs -->
+      <div data-tabs>
+        <div class="tabs__nav" role="tablist">
+          <button class="tab-btn active" data-tab="description" role="tab" aria-selected="true">Description</button>
+          <button class="tab-btn" data-tab="ingredients" role="tab" aria-selected="false">Ingredients</button>
+          <button class="tab-btn" data-tab="how-to-use" role="tab" aria-selected="false">How to Use</button>
+        </div>
+        <div class="tab-panel active" data-tab-panel="description" role="tabpanel">
+          <p style="font-size:var(--fs-sm);color:var(--gray-600);line-height:1.8">${product.description}</p>
+        </div>
+        <div class="tab-panel" data-tab-panel="ingredients" role="tabpanel">
+          <p style="font-size:var(--fs-sm);color:var(--gray-600);line-height:1.8">${product.ingredients}</p>
+        </div>
+        <div class="tab-panel" data-tab-panel="how-to-use" role="tabpanel">
+          <p style="font-size:var(--fs-sm);color:var(--gray-600);line-height:1.8">${product.howToUse}</p>
+        </div>
+      </div>
+    </div>`;
+
+  // Sticky ATC
+  document.getElementById('StickyName').textContent = product.title;
+  document.getElementById('StickyPrice').textContent = LuxeUtils.formatPrice(product.price);
+  const stickyBtn = document.getElementById('StickyBtn');
+  stickyBtn.onclick = addCurrentToCart;
+
+  // Sticky ATC observer
+  const atcBtn = document.getElementById('AtcBtn');
+  const obs = new IntersectionObserver(([e]) => {
+    document.getElementById('StickyAtc').classList.toggle('show', !e.isIntersecting);
+    document.getElementById('StickyAtc').setAttribute('aria-hidden', String(e.isIntersecting));
+  }, { threshold: 0 });
+  if (atcBtn) obs.observe(atcBtn);
+
+  // Bundle
+  renderBundle(product);
+
+  // FAQs
+  renderFaqs(product);
+
+  // Related
+  const related = LUXE_DATA.products.filter(p => p.collection === product.collection && p.id !== product.id).slice(0, 4);
+  document.getElementById('RelatedGrid').innerHTML = related.map(p => productCardHTML(p)).join('');
+  document.getElementById('RelatedSection').style.display = 'block';
+
+  // Recently Viewed
+  addRecentlyViewed(product);
+  const recent = getRecentlyViewed().filter(r => r.id !== product.id).slice(0, 4);
+  if (recent.length) {
+    const recentProducts = recent.map(r => LUXE_DATA.products.find(p => p.id === r.id)).filter(Boolean);
+    document.getElementById('RecentGrid').innerHTML = recentProducts.map(p => productCardHTML(p)).join('');
+    document.getElementById('RecentSection').style.display = 'block';
+  }
+
+  // Init newly added accordions/tabs
+  initAccordions();
+  initTabs();
+  LuxeWishlist.updateButtons();
+}
+
+function switchImg(src, btn) {
+  document.getElementById('MainImg').src = src;
+  document.querySelectorAll('.gallery__thumb').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function selectVariant(id, name, price, btn) {
+  selectedVariantId = id;
+  document.getElementById('SelectedVariant').textContent = name;
+  document.getElementById('ProductPrice').textContent = LuxeUtils.formatPrice(price);
+  document.getElementById('StickyPrice').textContent = LuxeUtils.formatPrice(price);
+  document.querySelectorAll('.product-details__actions button[onclick*="selectVariant"]').forEach(b => {
+    b.style.background = ''; b.style.color = '';
+  });
+  btn.style.background = 'var(--black)'; btn.style.color = 'var(--white)';
+}
+
+function changeQty(delta) {
+  const input = document.getElementById('QtyInput');
+  const val = Math.max(1, Math.min(10, parseInt(input.value) + delta));
+  input.value = val;
+}
+
+function addCurrentToCart() {
+  if (!currentProduct) return;
+  const qty = parseInt(document.getElementById('QtyInput')?.value || 1);
+  for (let i = 0; i < qty; i++) LuxeCart.addItem(currentProduct.id, currentProduct.title, currentProduct.price, currentProduct.img, currentProduct.type);
+}
+
+function renderBundle(product) {
+  const bundleProds = [product, ...LUXE_DATA.products.filter(p => p.collection !== product.collection && p.id !== product.id).slice(0, 2)];
+  bundleItems = bundleProds.map(p => ({ ...p, selected: true }));
+  updateBundlePricing();
+
+  document.getElementById('BundleItems').innerHTML = bundleProds.map((p, i) => `
+    <div class="bundle-item">
+      ${i > 0 ? '<span class="bundle-plus">+</span>' : ''}
+      <label style="display:flex;align-items:center;gap:var(--sp-3);cursor:pointer">
+        <input type="checkbox" checked onchange="toggleBundleItem(${p.id},this)" style="accent-color:var(--gold);width:18px;height:18px;cursor:pointer" aria-label="${p.title}">
+        <div class="bundle-item__img"><img src="${p.img}" alt="${p.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;border-radius:var(--r-md)"></div>
+        <div>
+          <div class="bundle-item__name">${p.title}</div>
+          <div class="bundle-item__price">${LuxeUtils.formatPrice(p.price)}</div>
+        </div>
+      </label>
+    </div>`).join('');
+
+  document.getElementById('BundleSection').style.display = 'block';
+}
+
+function toggleBundleItem(id, checkbox) {
+  const item = bundleItems.find(b => b.id === id);
+  if (item) item.selected = checkbox.checked;
+  updateBundlePricing();
+}
+
+function updateBundlePricing() {
+  const selected = bundleItems.filter(b => b.selected);
+  const original = selected.reduce((s, b) => s + b.price, 0);
+  const discounted = Math.round(original * (1 - BUNDLE_DISCOUNT));
+  const savings = original - discounted;
+  document.getElementById('BundleTotal').textContent = LuxeUtils.formatPrice(discounted);
+  document.getElementById('BundleOriginal').textContent = savings > 0 ? LuxeUtils.formatPrice(original) : '';
+  document.getElementById('BundleSavings').textContent = savings > 0 ? `You save ${LuxeUtils.formatPrice(savings)} (15%)` : '';
+  document.getElementById('BundleAddBtn').disabled = selected.length === 0;
+}
+
+function addBundleToCart() {
+  const selected = bundleItems.filter(b => b.selected);
+  selected.forEach(b => LuxeCart.addItem(b.id, b.title, b.price, b.img, b.type));
+  LuxeToast.show(`Bundle added! You saved 15% 🎉`, 'success');
+}
+
+function renderFaqs(product) {
+  const productFaqs = LUXE_DATA.faqs.filter(f => f.category === 'Products').slice(0, 5);
+  if (!productFaqs.length) return;
+  document.getElementById('ProductFaqs').innerHTML = productFaqs.map((faq, i) => `
+    <div class="accordion__item">
+      <button class="accordion__trigger" aria-expanded="${i===0}" aria-controls="faq-body-${i}" id="faq-trigger-${i}">
+        ${faq.q}<span class="accordion__icon">+</span>
+      </button>
+      <div class="accordion__content${i===0?' open':''}" id="faq-body-${i}" role="region" aria-labelledby="faq-trigger-${i}">
+        <div class="accordion__body">${faq.a}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('FaqSection').style.display = 'block';
+}
+
+// Init
+LuxeComponents.inject('Product — LUXÉ Beauty');
+const handle = LuxeUtils.getParam('handle') || 'vitamin-c-brightening-serum';
+const product = LUXE_DATA.products.find(p => p.handle === handle || String(p.id) === handle);
+if (product) renderProduct(product);
+else document.getElementById('ProductLayout').innerHTML = `<div class="empty-state" style="grid-column:1/-1;padding:5rem"><div class="empty-state__icon">😕</div><h2 class="empty-state__title">Product not found</h2><a href="products.html" class="btn btn--primary" style="margin-top:1.5rem">Back to Products</a></div>`;
+</script>
+</body>
+</html>

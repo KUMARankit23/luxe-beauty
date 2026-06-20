@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart — LUXÉ Beauty</title>
+<link rel="stylesheet" href="assets/css/tokens.css"><link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css"><link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/animations.css"><link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+<div id="LuxeHeader"></div>
+<main id="main" class="page-load">
+  <!-- Shipping bar -->
+  <div style="background:var(--cream);padding:var(--sp-4) 0">
+    <div class="container">
+      <div class="ship-bar">
+        <div class="ship-bar__text" data-ship-text>Add <strong data-ship-amount>₹999</strong> more for <strong>FREE Shipping</strong></div>
+        <div class="ship-bar__track" style="margin-top:var(--sp-2)"><div class="ship-bar__fill" data-ship-fill style="width:0%"></div></div>
+        <div class="ship-bar__complete" data-ship-complete>🎉 Congratulations! Free Shipping Unlocked!</div>
+      </div>
+    </div>
+  </div>
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="breadcrumb__sep">›</span><span aria-current="page">Cart</span></nav>
+      <h1 class="section-title" data-aos="fade-up" style="margin-bottom:var(--sp-10)">Your <em>Bag</em></h1>
+      <div class="cart-page-layout">
+        <div>
+          <div class="cart-page-items" id="CartPageItems"></div>
+          <!-- Upsell -->
+          <div style="margin-top:var(--sp-8);background:var(--cream);border-radius:var(--r-xl);padding:var(--sp-6)" id="UpsellSection">
+            <p style="font-size:var(--fs-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dark);margin-bottom:var(--sp-4)">Complete Your Routine</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:var(--sp-4)" id="UpsellGrid"></div>
+          </div>
+        </div>
+        <div class="cart-summary" data-aos="fade-left">
+          <h2 class="cart-summary__title">Order Summary</h2>
+          <div class="cart-summary__row"><span>Subtotal</span><span id="CartPageSubtotal">₹0</span></div>
+          <div class="cart-summary__row"><span>Shipping</span><span id="CartPageShipping">₹99</span></div>
+          <div class="cart-summary__row" style="font-weight:700;font-size:var(--fs-base)"><span>GST (18%)</span><span id="CartPageGst">₹0</span></div>
+          <div class="cart-summary__row"><span style="font-weight:700">Total</span><span class="cart-summary__total" id="CartPageTotal">₹0</span></div>
+          <!-- Coupon -->
+          <div class="cart-coupon">
+            <input type="text" class="form-input" id="CouponInput" placeholder="Enter coupon code" aria-label="Coupon code">
+            <button class="btn btn--secondary btn--sm" onclick="applyCoupon()" style="white-space:nowrap">Apply</button>
+          </div>
+          <div id="CouponMsg" style="font-size:var(--fs-xs);display:none;margin-bottom:var(--sp-4)"></div>
+          <a href="#" class="btn btn--primary btn--full" style="height:56px;font-size:var(--fs-base);font-weight:700;margin-bottom:var(--sp-3)" onclick="LuxeToast.show('Redirecting to checkout… 🛒','success');return false;">
+            Checkout Securely ✦
+          </a>
+          <a href="products.html" class="btn btn--secondary btn--full">Continue Shopping</a>
+          <div class="cart-trust" style="margin-top:var(--sp-4)">
+            <span class="cart-trust__item"><span style="color:var(--gold)">🔒</span> SSL Secure</span>
+            <span class="cart-trust__item"><span style="color:var(--gold)">🚚</span> Fast Delivery</span>
+            <span class="cart-trust__item"><span style="color:var(--gold)">↩</span> Easy Returns</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="LuxeFooter"></div>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script>
+<script src="assets/js/components.js"></script><script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script><script src="assets/js/app.js"></script>
+<script>
+LuxeComponents.inject('Cart — LUXÉ Beauty');
+// Upsell products
+const upsellGrid = document.getElementById('UpsellGrid');
+if (upsellGrid) {
+  const upsell = LUXE_DATA.products.filter(p => !LuxeCart.getItems().some(i => i.id === p.id)).slice(0, 3);
+  upsellGrid.innerHTML = upsell.map(p => `
+    <div style="display:flex;align-items:center;gap:var(--sp-3);background:var(--white);border-radius:var(--r-md);padding:var(--sp-3)">
+      <img src="${p.img}" alt="${p.title}" style="width:52px;height:52px;border-radius:var(--r-sm);object-fit:cover" loading="lazy">
+      <div style="flex:1;min-width:0"><div style="font-size:var(--fs-sm);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.title}</div><div style="font-size:var(--fs-xs);color:var(--gray-600)">${LuxeUtils.formatPrice(p.price)}</div></div>
+      <button class="btn btn--primary btn--sm" onclick="LuxeCart.addItem(${p.id},'${p.title}',${p.price},'${p.img}','${p.type}')">+ Add</button>
+    </div>`).join('');
+}
+
+function applyCoupon() {
+  const code = document.getElementById('CouponInput')?.value.trim().toUpperCase();
+  const msg = document.getElementById('CouponMsg');
+  if (!msg) return;
+  msg.style.display = 'block';
+  if (code === 'LUXE10') { msg.style.color = '#1B7A3A'; msg.textContent = '✓ 10% discount applied!'; LuxeToast.show('Coupon LUXE10 applied! 🎉','success'); }
+  else { msg.style.color = '#C62828'; msg.textContent = '✕ Invalid coupon code'; }
+}
+
+// Update GST on cart change
+document.addEventListener('luxe:cart:updated', ({ detail }) => {
+  const gst = Math.round(detail.total * 0.18);
+  const gstEl = document.getElementById('CartPageGst');
+  if (gstEl) gstEl.textContent = LuxeUtils.formatPrice(gst);
+});
+</script>
+</body>
+</html>

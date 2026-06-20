@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUXÉ Beauty — Premium Skincare Store</title>
+<meta name="description" content="Luxury dermatologist-tested skincare. Cruelty free, natural ingredients, made in India. Shop face serums, moisturizers, sunscreens and more.">
+<meta property="og:title" content="LUXÉ Beauty — Premium Skincare">
+<meta property="og:description" content="Luxury skincare crafted with the finest natural ingredients.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#D4AF37">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<style>
+  /* Homepage-specific overrides */
+  .hero { min-height: 92vh; }
+  .why-section { background: var(--cream); }
+</style>
+</head>
+<body>
+
+<!-- Injected by components.js -->
+<div id="LuxeHeader"></div>
+
+<main id="main">
+
+  <!-- ══ HERO ══════════════════════════════════════════════ -->
+  <section class="hero" id="Hero" aria-label="Hero banner">
+    <div class="hero__media" aria-hidden="true">
+      <img class="hero__img img-pan"
+        src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1920&q=85&auto=format&fit=crop"
+        alt="" role="presentation" loading="eager" fetchpriority="high"
+        width="1920" height="1080">
+    </div>
+    <div class="hero__overlay" aria-hidden="true"></div>
+    <div class="container hero__content">
+      <span class="hero__eyebrow anim-hero-sub">Luxury Skincare</span>
+      <h1 class="hero__title anim-hero-title">
+        Elevate Your<br><em>Skincare Ritual</em>
+      </h1>
+      <p class="hero__sub anim-hero-sub">
+        Dermatologist-tested formulas crafted with the finest natural ingredients for radiant, healthy skin.
+      </p>
+      <div class="hero__ctas anim-hero-cta">
+        <a href="products.html" class="btn btn--primary btn--lg">
+          Shop Now
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M3 9h12M10 4l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="collections.html" class="btn btn--ghost btn--lg">Explore Collection</a>
+      </div>
+      <div class="hero__badges anim-hero-badges">
+        <span class="badge badge--gold">🐰 Cruelty Free</span>
+        <span class="badge badge--gold">🧪 Dermatologist Tested</span>
+        <span class="badge badge--gold">🌿 Natural Ingredients</span>
+      </div>
+    </div>
+    <a href="#collections" class="hero__scroll" aria-label="Scroll to collections">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- ══ FEATURED COLLECTIONS ════════════════════════════ -->
+  <section class="section" id="collections" aria-labelledby="col-title">
+    <div class="container">
+      <header class="section-header" data-aos="fade-up">
+        <span class="eyebrow">Shop by Category</span>
+        <h2 class="section-title" id="col-title">Explore Our <em>Collections</em></h2>
+        <p class="section-subtitle">Premium formulas for every skin concern</p>
+      </header>
+      <div class="collections-grid" data-stagger id="CollectionsGrid">
+        <!-- Populated by JS -->
+      </div>
+      <div class="u-center" style="margin-top:3rem" data-aos="fade-up">
+        <a href="collections.html" class="btn btn--outline-gold">View All Collections</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ BEST SELLERS ════════════════════════════════════ -->
+  <section class="section" id="best-sellers" style="background:var(--off-white)" aria-labelledby="bs-title">
+    <div class="container">
+      <header class="section-header" data-aos="fade-up">
+        <span class="eyebrow">Most Loved</span>
+        <h2 class="section-title" id="bs-title">Best <em>Sellers</em></h2>
+        <p class="section-subtitle">Our customers' absolute favourites</p>
+      </header>
+      <div class="products-grid products-grid--4" data-stagger id="BestSellersGrid">
+        <!-- Populated by JS -->
+      </div>
+      <div class="u-center" style="margin-top:3rem" data-aos="fade-up">
+        <a href="products.html" class="btn btn--outline-gold">View All Products</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COMPARISON TABLE ═════════════════════════════════ -->
+  <section class="section" style="background:var(--cream)" aria-labelledby="comp-title">
+    <div class="container">
+      <header class="section-header" data-aos="fade-up">
+        <span class="eyebrow">Compare</span>
+        <h2 class="section-title" id="comp-title">Find Your <em>Perfect Match</em></h2>
+        <p class="section-subtitle">Compare our top products side by side</p>
+      </header>
+      <div style="overflow-x:auto" data-aos="fade-up">
+        <table class="comparison-table" aria-label="Product comparison">
+          <thead>
+            <tr>
+              <th scope="col">Product</th>
+              <th scope="col">Skin Type</th>
+              <th scope="col">Key Benefits</th>
+              <th scope="col">Price</th>
+              <th scope="col">Rating</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="ComparisonBody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ WHY CHOOSE US ════════════════════════════════════ -->
+  <section class="section why-section" aria-labelledby="why-title">
+    <div class="container">
+      <header class="section-header" data-aos="fade-up">
+        <span class="eyebrow">Our Promise</span>
+        <h2 class="section-title" id="why-title">Why Choose <em>LUXÉ Beauty?</em></h2>
+        <p class="section-subtitle">Science-backed formulas you can trust</p>
+      </header>
+      <div class="why-grid" data-stagger>
+        <div class="why-card">
+          <div class="why-card__icon" aria-hidden="true">🐰</div>
+          <h3 class="why-card__title">Cruelty Free</h3>
+          <p class="why-card__desc">Never tested on animals. 100% ethically produced skincare you can feel good about.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card__icon" aria-hidden="true">🧪</div>
+          <h3 class="why-card__title">Dermatologist Tested</h3>
+          <p class="why-card__desc">Every formula is clinically tested and approved by leading skin experts.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card__icon" aria-hidden="true">🌿</div>
+          <h3 class="why-card__title">Natural Ingredients</h3>
+          <p class="why-card__desc">Sourced from nature — botanicals, oils, and actives that genuinely work.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card__icon" aria-hidden="true">🇮🇳</div>
+          <h3 class="why-card__title">Made in India</h3>
+          <p class="why-card__desc">Proudly manufactured in India with world-class quality standards.</p>
+        </div>
+      </div>
+      <div class="stats-bar" data-stagger>
+        <div class="stat" style="text-align:center"><span class="stat__num" data-count="50000" data-suffix="+">0+</span><span class="stat__label">Happy Customers</span></div>
+        <div class="stat" style="text-align:center"><span class="stat__num">4.8★</span><span class="stat__label">Average Rating</span></div>
+        <div class="stat" style="text-align:center"><span class="stat__num" data-count="20" data-suffix="+">0+</span><span class="stat__label">Products</span></div>
+        <div class="stat" style="text-align:center"><span class="stat__num" data-count="5" data-suffix="+">0+</span><span class="stat__label">Years of Research</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TESTIMONIALS ═════════════════════════════════════ -->
+  <section class="section" aria-labelledby="testi-title">
+    <div class="container">
+      <header class="section-header" data-aos="fade-up">
+        <span class="eyebrow">Real Results</span>
+        <h2 class="section-title" id="testi-title">What Our <em>Customers Say</em></h2>
+        <p class="section-subtitle">Thousands of happy skin transformations</p>
+      </header>
+      <div data-testi-slider data-aos="scale" id="TestiSlider">
+        <div class="testi-viewport">
+          <div class="testi-track" id="TestiTrack">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+        <div class="testi-controls">
+          <button class="btn btn--secondary btn--icon" data-testi-prev aria-label="Previous testimonial">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M11 4L6 9l5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <div class="testi-dots" role="tablist" id="TestiDots">
+            <!-- Dots added by JS -->
+          </div>
+          <button class="btn btn--secondary btn--icon" data-testi-next aria-label="Next testimonial">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="M7 4l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ INSTAGRAM GALLERY ════════════════════════════════ -->
+  <section class="section" style="padding-block:clamp(3rem,6vw,6rem)" aria-labelledby="ig-title">
+    <div class="container">
+      <header class="section-header" data-aos="fade-up">
+        <span class="eyebrow">Follow Us</span>
+        <h2 class="section-title" id="ig-title">@luxebeautyindia</h2>
+        <a href="https://instagram.com/luxebeautyindia" target="_blank" rel="noopener noreferrer"
+          style="display:inline-flex;align-items:center;gap:6px;font-size:var(--fs-sm);font-weight:600;color:var(--gray-600);margin-top:var(--sp-2)">
+          📷 Follow on Instagram
+        </a>
+      </header>
+      <div class="ig-grid" id="IgGrid" data-stagger>
+        <!-- Populated by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ NEWSLETTER ════════════════════════════════════════ -->
+  <section class="section nl-section" aria-labelledby="nl-title">
+    <div class="container container--md">
+      <div class="nl-card" data-aos="scale">
+        <div class="nl-card__media" aria-hidden="true">
+          <img class="nl-card__img"
+            src="https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=700&q=80&auto=format&fit=crop"
+            alt="" role="presentation" loading="lazy" width="700" height="800">
+        </div>
+        <div class="nl-card__content">
+          <span class="eyebrow" style="color:rgba(212,175,55,.7)">Exclusive Members</span>
+          <h2 class="nl-card__title" id="nl-title">Join the <em>LUXÉ Community</em></h2>
+          <p class="nl-card__desc">Subscribe and get 10% off your first order, plus early access to new launches.</p>
+          <div class="nl-card__perks" aria-label="Member benefits">
+            <div class="nl-card__perk">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="rgba(212,175,55,.2)"/><path d="M5 8l2 2 4-4" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              10% off your first order
+            </div>
+            <div class="nl-card__perk">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="rgba(212,175,55,.2)"/><path d="M5 8l2 2 4-4" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Early access to new launches
+            </div>
+            <div class="nl-card__perk">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="rgba(212,175,55,.2)"/><path d="M5 8l2 2 4-4" stroke="#D4AF37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Exclusive skincare tips & routines
+            </div>
+          </div>
+          <form class="nl-card__form" id="NLForm" novalidate>
+            <input type="email" class="form-input form-input--dark" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+            <button type="submit" class="btn btn--primary" style="flex-shrink:0">Claim 10% Off</button>
+          </form>
+          <div class="nl-success" id="NLSuccess" role="status" aria-live="polite">
+            <span class="nl-success__icon">🎉</span>
+            <h3>You're in!</h3>
+            <p>Check your inbox for your exclusive 10% discount code.</p>
+          </div>
+          <p class="nl-card__privacy">By subscribing you agree to our <a href="#">Privacy Policy</a>. Unsubscribe anytime.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="LuxeFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/components.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+// ── Inject Header & Footer ────────────────────────────────
+LuxeComponents.inject('LUXÉ Beauty — Premium Skincare Store');
+
+// ── Collections Grid ─────────────────────────────────────
+const collectionsGrid = document.getElementById('CollectionsGrid');
+const featuredCols = LUXE_DATA.collections.slice(0, 4);
+if (collectionsGrid) {
+  collectionsGrid.innerHTML = featuredCols.map(c => `
+    <div class="col-card">
+      <a href="products.html?collection=${c.handle}" aria-label="Shop ${c.title}">
+        <div class="col-card__media">
+          <img class="col-card__img" src="${c.img}" alt="${c.title}" loading="lazy" width="600" height="800">
+          <div class="col-card__overlay" aria-hidden="true"></div>
+          ${c.badge ? `<div class="col-card__badge"><span class="badge badge--best">${c.badge}</span></div>` : ''}
+        </div>
+        <div class="col-card__body">
+          <span class="col-card__label">${c.title}</span>
+          <span class="col-card__count">${LUXE_DATA.products.filter(p=>p.collection===c.handle).length} Products</span>
+        </div>
+        <div class="col-card__arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </a>
+    </div>`).join('');
+}
+
+// ── Best Sellers Grid ─────────────────────────────────────
+const bsGrid = document.getElementById('BestSellersGrid');
+if (bsGrid) {
+  const bestSellers = LUXE_DATA.products.filter(p => p.tags.includes('bestseller')).slice(0, 8);
+  bsGrid.innerHTML = bestSellers.map(p => productCardHTML(p)).join('');
+}
+
+// ── Comparison Table ──────────────────────────────────────
+const compBody = document.getElementById('ComparisonBody');
+if (compBody) {
+  const featured = LUXE_DATA.products.slice(0, 4);
+  const minPrice = Math.min(...featured.map(p => p.price));
+  const maxRating = Math.max(...featured.map(p => p.rating));
+  compBody.innerHTML = featured.map(p => `
+    <tr class="${p.tags.includes('bestseller') ? 'row--highlight' : ''}">
+      <td>
+        <div class="comp-product">
+          <div class="comp-product__img">${p.emoji}</div>
+          <div>
+            <div class="comp-product__name">${p.title}</div>
+            ${p.tags.includes('bestseller') ? '<span class="badge badge--best" style="margin-top:4px">Best Seller</span>' : ''}
+          </div>
+        </div>
+      </td>
+      <td>${p.skinType}</td>
+      <td>
+        <ul class="comp-benefits">
+          ${p.benefits.map(b => `<li><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6l3 3 5-5" stroke="#1B7A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>${b}</li>`).join('')}
+        </ul>
+      </td>
+      <td class="comp-price ${p.price === minPrice ? 'comp-price--best' : ''}">${LuxeUtils.formatPrice(p.price)}</td>
+      <td class="${p.rating === maxRating ? 'comp-rating--best' : ''}">
+        ${LuxeUtils.starsHTML(p.rating)} ${p.rating}
+      </td>
+      <td><button class="btn btn--primary btn--sm" onclick="LuxeCart.addItem(${p.id},'${p.title}',${p.price},'${p.img}','${p.type}')">Buy Now</button></td>
+    </tr>`).join('');
+}
+
+// ── Testimonials ──────────────────────────────────────────
+const testiTrack = document.getElementById('TestiTrack');
+const testiDots = document.getElementById('TestiDots');
+if (testiTrack) {
+  testiTrack.innerHTML = LUXE_DATA.reviews.map((r, i) => `
+    <div class="testi-slide" role="group" aria-label="Testimonial ${i+1} of ${LUXE_DATA.reviews.length}">
+      <div class="testi-card">
+        <div class="testi-card__top">
+          ${LuxeUtils.starsHTML(r.rating)}
+          <span class="testi-card__product">${r.product}</span>
+        </div>
+        <blockquote class="testi-card__quote">"${r.text}"</blockquote>
+        <div class="testi-card__footer">
+          <div class="testi-card__avatar" style="background:linear-gradient(135deg,${r.color},${r.color}aa)">${r.avatar}</div>
+          <div>
+            <cite class="testi-card__name">${r.author}</cite>
+            <span class="testi-card__loc">${r.city}, India</span>
+          </div>
+          ${r.verified ? `<span class="testi-card__verified"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="7" fill="#1B7A3A"/><path d="M4 7l2 2 4-4" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Verified</span>` : ''}
+        </div>
+      </div>
+    </div>`).join('');
+  if (testiDots) {
+    testiDots.innerHTML = LUXE_DATA.reviews.map((_, i) => `<button class="testi-dot${i===0?' active':''}" role="tab" aria-label="Testimonial ${i+1}" aria-selected="${i===0}"></button>`).join('');
+  }
+}
+
+// ── Instagram Grid ────────────────────────────────────────
+const igGrid = document.getElementById('IgGrid');
+if (igGrid) {
+  igGrid.innerHTML = LUXE_DATA.igPosts.map(p => `
+    <div class="ig-item">
+      <img class="ig-item__img" src="${p.img}" alt="Instagram post" loading="lazy" width="400" height="400">
+      <div class="ig-item__overlay" aria-hidden="true">
+        <div class="ig-item__meta">
+          <span class="ig-item__likes">❤ ${p.likes}</span>
+          <span>${p.caption}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+</script>
+</body>
+</html>

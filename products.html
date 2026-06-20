@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Products — LUXÉ Beauty</title>
+<meta name="description" content="Shop LUXÉ Beauty's full range of premium skincare — serums, moisturizers, sunscreens, and more.">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+<div id="LuxeHeader"></div>
+<main id="main" class="page-load">
+
+  <!-- Page Hero -->
+  <section class="hero hero--short" aria-label="Shop all products">
+    <div class="hero__media" aria-hidden="true">
+      <img class="hero__img" src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=1200&q=80&auto=format&fit=crop" alt="" role="presentation" loading="eager" width="1200" height="500">
+    </div>
+    <div class="hero__overlay hero__overlay--center" aria-hidden="true"></div>
+    <div class="container hero__content hero__content--center">
+      <span class="hero__eyebrow anim-hero-sub">Premium Skincare</span>
+      <h1 class="hero__title anim-hero-title" style="max-width:100%;text-align:center">Our <em>Products</em></h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a><span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <span aria-current="page">All Products</span>
+      </nav>
+
+      <div class="shop-layout">
+        <!-- Filters Sidebar -->
+        <aside class="filters-sidebar" id="FiltersSidebar" aria-label="Product filters">
+          <div class="filter-group">
+            <h3 class="filter-group__title">Category</h3>
+            <div class="filter-options" id="CategoryFilters">
+              <label class="filter-option"><input type="checkbox" value="all" checked onchange="applyFilters()"> All Products</label>
+              <label class="filter-option"><input type="checkbox" value="face-serums" onchange="applyFilters()"> Face Serums</label>
+              <label class="filter-option"><input type="checkbox" value="moisturizers" onchange="applyFilters()"> Moisturizers</label>
+              <label class="filter-option"><input type="checkbox" value="sunscreens" onchange="applyFilters()"> Sunscreens</label>
+              <label class="filter-option"><input type="checkbox" value="night-creams" onchange="applyFilters()"> Night Creams</label>
+              <label class="filter-option"><input type="checkbox" value="face-wash" onchange="applyFilters()"> Face Wash</label>
+              <label class="filter-option"><input type="checkbox" value="lip-care" onchange="applyFilters()"> Lip Care</label>
+              <label class="filter-option"><input type="checkbox" value="beauty-kits" onchange="applyFilters()"> Beauty Kits</label>
+            </div>
+          </div>
+          <div class="filter-group">
+            <h3 class="filter-group__title">Price Range</h3>
+            <div class="price-range">
+              <input type="range" id="PriceRange" min="0" max="2000" value="2000" step="50" oninput="onPriceChange(this.value)" aria-label="Maximum price">
+              <div class="price-values"><span>₹0</span><span id="PriceMax">₹2000</span></div>
+            </div>
+          </div>
+          <div class="filter-group">
+            <h3 class="filter-group__title">Rating</h3>
+            <div class="filter-options">
+              <label class="filter-option"><input type="radio" name="rating" value="0" checked onchange="applyFilters()"> All Ratings</label>
+              <label class="filter-option"><input type="radio" name="rating" value="4.5" onchange="applyFilters()"> ★ 4.5 & above</label>
+              <label class="filter-option"><input type="radio" name="rating" value="4" onchange="applyFilters()"> ★ 4.0 & above</label>
+            </div>
+          </div>
+          <div class="filter-group">
+            <h3 class="filter-group__title">Tags</h3>
+            <div class="filter-options">
+              <label class="filter-option"><input type="checkbox" value="bestseller" onchange="applyFilters()"> Best Sellers</label>
+              <label class="filter-option"><input type="checkbox" value="new" onchange="applyFilters()"> New Arrivals</label>
+            </div>
+          </div>
+          <button class="btn btn--secondary btn--full" style="margin-top:var(--sp-4)" onclick="resetFilters()">Clear All Filters</button>
+        </aside>
+
+        <!-- Products Area -->
+        <div class="products-area">
+          <div class="products-toolbar">
+            <button class="filters-toggle-btn" onclick="toggleFilters()" aria-controls="FiltersSidebar">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 4h12M4 8h8M6 12h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Filters
+            </button>
+            <p class="products-count" id="ProductCount" aria-live="polite">Showing all products</p>
+            <select class="sort-select" id="SortSelect" onchange="applyFilters()" aria-label="Sort products">
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="rating-desc">Best Rated</option>
+              <option value="name-asc">A–Z</option>
+            </select>
+          </div>
+          <div class="products-grid" id="ProductsGrid" data-stagger>
+            <!-- Populated by JS -->
+          </div>
+          <div id="NoResults" style="display:none" class="empty-state">
+            <div class="empty-state__icon">🔍</div>
+            <h3 class="empty-state__title">No products found</h3>
+            <p class="empty-state__text">Try adjusting your filters</p>
+            <button class="btn btn--outline-gold" onclick="resetFilters()">Clear Filters</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="LuxeFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/components.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+LuxeComponents.inject('All Products — LUXÉ Beauty');
+
+let maxPrice = 2000;
+let filteredProducts = [...LUXE_DATA.products];
+
+function getFilters() {
+  const cats = [...document.querySelectorAll('#CategoryFilters input:checked')].map(el => el.value).filter(v => v !== 'all');
+  const allChecked = document.querySelector('#CategoryFilters input[value="all"]')?.checked;
+  const rating = parseFloat(document.querySelector('input[name="rating"]:checked')?.value || '0');
+  const tags = [...document.querySelectorAll('.filter-options input[type="checkbox"][value="bestseller"]:checked, .filter-options input[type="checkbox"][value="new"]:checked')].map(el => el.value);
+  const sort = document.getElementById('SortSelect')?.value || 'featured';
+  const q = LuxeUtils.getParam('q')?.toLowerCase() || '';
+  const collection = LuxeUtils.getParam('collection') || '';
+  return { cats, allChecked, rating, tags, sort, q, collection };
+}
+
+function applyFilters() {
+  const { cats, allChecked, rating, tags, sort, q, collection } = getFilters();
+  let products = [...LUXE_DATA.products];
+
+  if (collection) {
+    if (collection === 'best-sellers') products = products.filter(p => p.tags.includes('bestseller'));
+    else if (collection === 'new-arrivals') products = products.filter(p => p.tags.includes('new'));
+    else if (collection === 'sale') products = products.filter(p => p.comparePrice);
+    else products = products.filter(p => p.collection === collection);
+  }
+  if (!allChecked && cats.length > 0) products = products.filter(p => cats.includes(p.collection));
+  if (rating > 0) products = products.filter(p => p.rating >= rating);
+  if (tags.length > 0) products = products.filter(p => tags.some(t => p.tags.includes(t)));
+  if (maxPrice < 2000) products = products.filter(p => p.price <= maxPrice);
+  if (q) products = products.filter(p => p.title.toLowerCase().includes(q) || p.type.toLowerCase().includes(q));
+
+  products = sortProducts(products, sort);
+  renderProducts(products);
+}
+
+function sortProducts(products, sort) {
+  const p = [...products];
+  if (sort === 'price-asc') return p.sort((a, b) => a.price - b.price);
+  if (sort === 'price-desc') return p.sort((a, b) => b.price - a.price);
+  if (sort === 'rating-desc') return p.sort((a, b) => b.rating - a.rating);
+  if (sort === 'name-asc') return p.sort((a, b) => a.title.localeCompare(b.title));
+  return p;
+}
+
+function renderProducts(products) {
+  const grid = document.getElementById('ProductsGrid');
+  const noResults = document.getElementById('NoResults');
+  const count = document.getElementById('ProductCount');
+  if (!grid) return;
+  if (!products.length) {
+    grid.innerHTML = '';
+    if (noResults) noResults.style.display = 'flex';
+    if (count) count.textContent = '0 products found';
+    return;
+  }
+  if (noResults) noResults.style.display = 'none';
+  if (count) count.textContent = `Showing ${products.length} product${products.length !== 1 ? 's' : ''}`;
+  grid.innerHTML = products.map(p => productCardHTML(p)).join('');
+  LuxeWishlist.updateButtons();
+  // Re-run scroll reveal
+  document.querySelectorAll('[data-aos]').forEach(el => {
+    el.classList.remove('aos-in');
+    setTimeout(() => new IntersectionObserver(([e]) => { if(e.isIntersecting) e.target.classList.add('aos-in'); }, {threshold:.1}).observe(el));
+  });
+}
+
+function onPriceChange(val) {
+  maxPrice = parseInt(val);
+  document.getElementById('PriceMax').textContent = '₹' + Number(val).toLocaleString('en-IN');
+  applyFilters();
+}
+
+function resetFilters() {
+  document.querySelectorAll('#CategoryFilters input').forEach(el => el.checked = el.value === 'all');
+  document.querySelector('input[name="rating"][value="0"]').checked = true;
+  document.querySelectorAll('.filter-options input[type="checkbox"][value="bestseller"], .filter-options input[type="checkbox"][value="new"]').forEach(el => el.checked = false);
+  maxPrice = 2000;
+  const priceRange = document.getElementById('PriceRange');
+  if (priceRange) { priceRange.value = 2000; document.getElementById('PriceMax').textContent = '₹2,000'; }
+  document.getElementById('SortSelect').value = 'featured';
+  applyFilters();
+}
+
+function toggleFilters() {
+  const sidebar = document.getElementById('FiltersSidebar');
+  const overlay = document.getElementById('Overlay');
+  sidebar?.classList.toggle('open');
+  overlay?.classList.toggle('active');
+}
+
+// Check URL params and init
+const collectionParam = LuxeUtils.getParam('collection');
+if (collectionParam) {
+  const collData = LUXE_DATA.collections.find(c => c.handle === collectionParam);
+  if (collData) {
+    document.querySelector('h1').innerHTML = `${collData.title}`;
+    const catInput = document.querySelector(`#CategoryFilters input[value="${collectionParam}"]`);
+    if (catInput) { document.querySelector('#CategoryFilters input[value="all"]').checked = false; catInput.checked = true; }
+  }
+}
+const qParam = LuxeUtils.getParam('q');
+if (qParam) document.querySelector('h1').innerHTML = `Search: "<em>${qParam}</em>"`;
+
+applyFilters();
+</script>
+</body>
+</html>

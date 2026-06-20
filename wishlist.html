@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Wishlist — LUXÉ Beauty</title>
+<meta name="description" content="Your saved LUXÉ Beauty products.">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+<div id="LuxeHeader"></div>
+
+<main id="main" class="page-load">
+  <section class="section">
+    <div class="container">
+
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <span aria-current="page">Wishlist</span>
+      </nav>
+
+      <header class="section-header u-text-left" style="text-align:left;margin-bottom:var(--sp-10)" data-aos="fade-up">
+        <span class="eyebrow" style="justify-content:flex-start">My Saves</span>
+        <h1 class="section-title">
+          My <em>Wishlist</em>
+          <span style="font-size:var(--fs-xl);color:var(--gray-400);font-family:var(--font-body);font-weight:400">
+            (<span id="WishlistCount">0</span>)
+          </span>
+        </h1>
+      </header>
+
+      <div class="products-grid products-grid--4" id="WishlistGrid" data-stagger>
+        <!-- Populated by wishlist.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Recently Viewed -->
+  <section class="section" style="background:var(--off-white);display:none" id="RecentSection">
+    <div class="container">
+      <header class="section-header" data-aos="fade-up">
+        <span class="eyebrow">Continue Browsing</span>
+        <h2 class="section-title">Recently <em>Viewed</em></h2>
+      </header>
+      <div class="products-grid products-grid--4" data-stagger id="RecentGrid"></div>
+    </div>
+  </section>
+</main>
+
+<div id="LuxeFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/components.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+LuxeComponents.inject('Wishlist — LUXÉ Beauty');
+
+// Recently viewed
+const RECENTLY_KEY = 'luxe_recently_viewed';
+document.addEventListener('DOMContentLoaded', () => {
+  try {
+    const recent = JSON.parse(localStorage.getItem(RECENTLY_KEY) || '[]').slice(0, 4);
+    const prods = recent.map(r => LUXE_DATA.products.find(p => p.id === r.id)).filter(Boolean);
+    if (prods.length) {
+      document.getElementById('RecentGrid').innerHTML = prods.map(p => productCardHTML(p)).join('');
+      document.getElementById('RecentSection').style.display = 'block';
+      LuxeWishlist.updateButtons();
+    }
+  } catch {}
+});
+</script>
+</body>
+</html>

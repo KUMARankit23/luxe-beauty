@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collections — LUXÉ Beauty</title>
+<link rel="stylesheet" href="assets/css/tokens.css"><link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css"><link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/animations.css"><link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+<div id="LuxeHeader"></div>
+<main id="main" class="page-load">
+  <section class="hero hero--short">
+    <div class="hero__media" aria-hidden="true"><img class="hero__img" src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=1200&q=80&auto=format&fit=crop" alt="" role="presentation" loading="eager" width="1200" height="500"></div>
+    <div class="hero__overlay hero__overlay--center" aria-hidden="true"></div>
+    <div class="container hero__content hero__content--center">
+      <span class="hero__eyebrow anim-hero-sub">Browse</span>
+      <h1 class="hero__title anim-hero-title" style="max-width:100%;text-align:center">All <em>Collections</em></h1>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="breadcrumb__sep">›</span><span aria-current="page">Collections</span></nav>
+      <!-- Skin type filter tabs -->
+      <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;margin-bottom:var(--sp-10)" data-aos="fade-up">
+        <span class="badge badge--gold">By Product Type</span>
+      </div>
+      <div class="collections-grid" id="CollectionsGrid" data-stagger></div>
+      <div style="margin-top:var(--sp-16)" data-aos="fade-up">
+        <h2 class="section-title" style="margin-bottom:var(--sp-8)">Shop by <em>Skin Type</em></h2>
+        <div class="grid-3" id="SkinTypeGrid"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="LuxeFooter"></div>
+<script src="assets/js/data.js"></script><script src="assets/js/utils.js"></script>
+<script src="assets/js/components.js"></script><script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script><script src="assets/js/app.js"></script>
+<script>
+LuxeComponents.inject('Collections — LUXÉ Beauty');
+const grid = document.getElementById('CollectionsGrid');
+if (grid) {
+  grid.innerHTML = LUXE_DATA.collections.map(c => `
+    <div class="col-card"><a href="products.html?collection=${c.handle}" aria-label="Shop ${c.title}">
+      <div class="col-card__media">
+        <img class="col-card__img" src="${c.img}" alt="${c.title}" loading="lazy" width="600" height="800">
+        <div class="col-card__overlay" aria-hidden="true"></div>
+        ${c.badge ? `<div class="col-card__badge"><span class="badge badge--best">${c.badge}</span></div>` : ''}
+      </div>
+      <div class="col-card__body">
+        <span class="col-card__label">${c.title}</span>
+        <span class="col-card__count">${LUXE_DATA.products.filter(p=>p.collection===c.handle).length} Products</span>
+      </div>
+      <div class="col-card__arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </a></div>`).join('');
+}
+const skinGrid = document.getElementById('SkinTypeGrid');
+if (skinGrid) {
+  const skinTypes = [
+    {name:'Oily Skin',handle:'oily-skin',desc:'Lightweight, non-comedogenic formulas that control shine',emoji:'💧',img:'https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=600&q=80&auto=format&fit=crop'},
+    {name:'Dry Skin',handle:'dry-skin',desc:'Deeply nourishing formulas that restore moisture',emoji:'🌸',img:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=600&q=80&auto=format&fit=crop'},
+    {name:'Sensitive Skin',handle:'sensitive-skin',desc:'Gentle, fragrance-free formulas for reactive skin',emoji:'🍃',img:'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=600&q=80&auto=format&fit=crop'},
+  ];
+  skinGrid.innerHTML = skinTypes.map(s => `
+    <div class="col-card"><a href="products.html?collection=${s.handle}" aria-label="Shop for ${s.name}">
+      <div class="col-card__media" style="aspect-ratio:4/3">
+        <img class="col-card__img" src="${s.img}" alt="${s.name}" loading="lazy">
+        <div class="col-card__overlay" aria-hidden="true"></div>
+      </div>
+      <div class="col-card__body"><span class="col-card__label">${s.name}</span><span class="col-card__count">${s.desc}</span></div>
+      <div class="col-card__arrow" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M8 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+    </a></div>`).join('');
+}
+</script>
+</body>
+</html>

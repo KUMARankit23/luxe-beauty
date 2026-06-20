@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Contact Us — LUXÉ Beauty</title>
+<meta name="description" content="Get in touch with the LUXÉ Beauty team. We're here to help.">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/animations.css">
+<link rel="stylesheet" href="assets/css/pages.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+<div id="LuxeHeader"></div>
+
+<main id="main" class="page-load">
+
+  <!-- Hero -->
+  <section class="hero hero--short" aria-label="Contact us">
+    <div class="hero__media" aria-hidden="true">
+      <img class="hero__img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=1200&q=80&auto=format&fit=crop" alt="" role="presentation" loading="eager" width="1200" height="500">
+    </div>
+    <div class="hero__overlay" aria-hidden="true"></div>
+    <div class="container hero__content">
+      <span class="hero__eyebrow anim-hero-sub">We're Here to Help</span>
+      <h1 class="hero__title anim-hero-title">Get In <em>Touch</em></h1>
+      <p class="hero__sub anim-hero-sub">Our skincare experts are ready to help you with anything.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="contact-grid">
+
+        <!-- Contact Info -->
+        <div data-aos="fade-right">
+          <h2 style="font-family:var(--font-heading);font-size:var(--fs-2xl);font-weight:700;margin-bottom:var(--sp-8)">Contact Information</h2>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon" aria-hidden="true">📧</div>
+            <div>
+              <p class="contact-info__label">Email Us</p>
+              <p class="contact-info__value">
+                <a href="mailto:support@luxebeauty.in" style="color:var(--gold-dark)">support@luxebeauty.in</a><br>
+                <span style="font-size:var(--fs-xs);color:var(--gray-500)">Response within 24 hours</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon" aria-hidden="true">📞</div>
+            <div>
+              <p class="contact-info__label">Call Us</p>
+              <p class="contact-info__value">
+                +91 1800-LUXE-123 (Toll Free)<br>
+                <span style="font-size:var(--fs-xs);color:var(--gray-500)">Mon–Sat: 9am – 7pm IST</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon" aria-hidden="true">💬</div>
+            <div>
+              <p class="contact-info__label">Live Chat</p>
+              <p class="contact-info__value">
+                Available on website<br>
+                <span style="font-size:var(--fs-xs);color:var(--gray-500)">Mon–Sun: 9am – 11pm IST</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="contact-info__item">
+            <div class="contact-info__icon" aria-hidden="true">📍</div>
+            <div>
+              <p class="contact-info__label">Office</p>
+              <p class="contact-info__value">
+                LUXÉ Beauty Pvt. Ltd.<br>
+                42, Bandra-Kurla Complex<br>
+                Mumbai — 400051, India
+              </p>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div style="margin-top:var(--sp-8)">
+            <p style="font-size:var(--fs-xs);font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:var(--sp-4)">Follow Us</p>
+            <div style="display:flex;gap:var(--sp-3)">
+              <a href="#" aria-label="Instagram" style="width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-200);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .25s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--gray-200)'">📷</a>
+              <a href="#" aria-label="Facebook" style="width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-200);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .25s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--gray-200)'">📘</a>
+              <a href="#" aria-label="YouTube" style="width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gray-200);display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .25s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--gray-200)'">▶️</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="contact-form" data-aos="fade-left">
+          <h2 style="font-family:var(--font-heading);font-size:var(--fs-xl);font-weight:700;margin-bottom:var(--sp-6)">Send Us a Message</h2>
+          <form id="ContactForm" novalidate>
+            <div class="contact-form__grid" style="margin-bottom:var(--sp-5)">
+              <div class="form-group">
+                <label class="form-label" for="CName">Full Name *</label>
+                <input type="text" id="CName" class="form-input" placeholder="Priya Sharma" required autocomplete="name">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="CEmail">Email Address *</label>
+                <input type="email" id="CEmail" class="form-input" placeholder="your@email.com" required autocomplete="email">
+              </div>
+            </div>
+            <div class="form-group" style="margin-bottom:var(--sp-5)">
+              <label class="form-label" for="CPhone">Phone Number</label>
+              <input type="tel" id="CPhone" class="form-input" placeholder="+91 98765 43210" autocomplete="tel">
+            </div>
+            <div class="form-group" style="margin-bottom:var(--sp-5)">
+              <label class="form-label" for="CSubject">Subject *</label>
+              <select id="CSubject" class="form-input" required>
+                <option value="">Select a topic…</option>
+                <option>Product Recommendation</option>
+                <option>Order Query</option>
+                <option>Shipping & Delivery</option>
+                <option>Returns & Refunds</option>
+                <option>Partnership / Wholesale</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-bottom:var(--sp-6)">
+              <label class="form-label" for="CMessage">Message *</label>
+              <textarea id="CMessage" class="form-input" placeholder="Tell us how we can help…" required rows="5" style="resize:vertical"></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary btn--full" style="height:52px">
+              Send Message
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </form>
+
+          <!-- Success state -->
+          <div id="ContactSuccess" style="display:none;text-align:center;padding:2.5rem 1rem">
+            <div style="font-size:3rem;margin-bottom:1rem" aria-hidden="true">✉️</div>
+            <h3 style="font-family:var(--font-heading);font-size:var(--fs-xl);font-weight:700;margin-bottom:0.75rem">Message Received!</h3>
+            <p style="font-size:var(--fs-sm);color:var(--gray-600);margin-bottom:1.5rem">We'll get back to you within 24 hours.</p>
+            <button class="btn btn--outline-gold" onclick="resetContactForm()">Send Another Message</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FAQ CTA -->
+  <section style="background:var(--cream);padding:clamp(3rem,6vw,5rem) 0">
+    <div class="container" style="text-align:center">
+      <span class="eyebrow" style="justify-content:center">Quick Answers</span>
+      <h2 class="section-title" style="margin-bottom:1rem">Have a Common Question?</h2>
+      <p class="section-subtitle" style="margin-bottom:2rem">Check our FAQ page for instant answers.</p>
+      <a href="faq.html" class="btn btn--primary">Browse FAQs</a>
+    </div>
+  </section>
+</main>
+
+<div id="LuxeFooter"></div>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/components.js"></script>
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/wishlist.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+LuxeComponents.inject('Contact Us — LUXÉ Beauty');
+
+document.getElementById('ContactForm')?.addEventListener('submit', e => {
+  e.preventDefault();
+  const name = document.getElementById('CName').value.trim();
+  const email = document.getElementById('CEmail').value.trim();
+  const subject = document.getElementById('CSubject').value;
+  const message = document.getElementById('CMessage').value.trim();
+
+  if (!name || !email || !subject || !message) {
+    LuxeToast.show('Please fill in all required fields', 'error', '⚠');
+    return;
+  }
+
+  // Simulate submission
+  const btn = e.target.querySelector('[type="submit"]');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner" style="margin:0 auto"></span>';
+
+  setTimeout(() => {
+    document.getElementById('ContactForm').style.display = 'none';
+    document.getElementById('ContactSuccess').style.display = 'block';
+    LuxeToast.show(`Message sent, ${name}! We'll reply within 24h 📧`, 'success');
+  }, 1500);
+});
+
+function resetContactForm() {
+  document.getElementById('ContactForm').style.display = 'block';
+  document.getElementById('ContactForm').reset();
+  document.getElementById('ContactSuccess').style.display = 'none';
+  document.getElementById('ContactForm').querySelector('[type="submit"]').disabled = false;
+  document.getElementById('ContactForm').querySelector('[type="submit"]').innerHTML = 'Send Message <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h12M9 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+</script>
+</body>
+</html>
